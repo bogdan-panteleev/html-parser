@@ -60,8 +60,10 @@ const attributeDelimiter = '=';
 function parseAttributes(html) {
   const closeIndex = html.indexOf('>');
   const inner = html.slice(0, closeIndex);
-  const attributesMatch = /\w+="\w+"/g.exec(inner);
-  const attributes = (attributesMatch || []).map((attrMatch) => {
+  const attributesMatch = inner.matchAll(/\w+="\w+"/g);
+  const attrsArray = Array.from(attributesMatch) || [];
+  const attributes = attrsArray.map((matchArr) => {
+    const attrMatch = matchArr[0];
     const delimiterIndex = attrMatch.indexOf(attributeDelimiter);
     const attrName = attrMatch.slice(0, delimiterIndex);
     const attrVal = skipSpace(skipSpace(attrMatch.slice(delimiterIndex + 1)).slice(1, -1));
@@ -76,7 +78,7 @@ function skipSpace(string) {
 
 parseHTML(
   `
-<body>   kek<a><div></div>LOL</a>
+<body id="3" kek="8">   kek<a><div></div>LOL</a>
 </body>
 `
 );
