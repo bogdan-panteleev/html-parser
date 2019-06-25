@@ -1,6 +1,4 @@
 
-// if(typeof window === 'function')
-
 export function parseHTML(html) {
   const {rest, tree} = parseTag(html);
   if (rest) throw new Error('Error in syntax');
@@ -102,14 +100,3 @@ function parseAttribute(matchArr) {
 function skipSpace(string) {
   return string.trim();
 }
-
-
-
-const tree = parseHTML(
-  `
-<div>AAA<kek></kek></div>
-
-`
-);
-
-console.log(tree);
